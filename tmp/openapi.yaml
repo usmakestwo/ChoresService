@@ -1,0 +1,114 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: Chore Service
+  description: A chore service that creates and retrives a list of chores
+  contact:
+    name: Gonzalo Vazquez
+    email: gvazquez@usmakestwo.io
+    url: 'http://usmakestwo.io'
+  license:
+    name: MIT
+servers:
+  - url: 'http://usmakestwo.com/chore/v1'
+paths:
+  /chores:
+    get:
+      description: |
+        Retrieve all chores
+      summary: List all chores
+      operationId: listChores
+      tags:
+        - chores
+      responses:
+        '200':
+          description: An array of chores
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Chore'
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      description: |
+        Create a new chore
+      summary: Create a chore
+      operationId: createChores
+      tags:
+        - chores
+      responses:
+        '201':
+          description: Null response
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  '/chores/{choreId}':
+    get:
+      description: |
+        Retrieve a chore with a specific ID.
+      summary: Info for a specific chore
+      operationId: showChoreById
+      tags:
+        - chores
+      parameters:
+        - name: choreId
+          in: path
+          required: true
+          description: The id of the chore to retrive
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Chore'
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /health:
+    get:
+      description: |
+        Successful operation
+      summary: health check
+      responses:
+        '200':
+          description: Service available
+components:
+  schemas:
+    Chore:
+      required:
+        - id
+        - name
+        - completed
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        completed:
+          type: boolean
+        repeat:
+          type: string
+    Error:
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
