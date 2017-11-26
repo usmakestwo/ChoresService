@@ -20,13 +20,34 @@ paths:
       operationId: listChores
       tags:
         - chores
+      parameters:
+        - name: limit
+          in: query
+          description: How many items to return at one time (max 100)
+          required: false
+          schema:
+            type: integer
+      format: int32
+      security:
+        - chore_auth:
+            - 'read:chores'
       responses:
         '200':
           description: An array of chores
           content:
             application/json:
               schema:
+                type: array
                 $ref: '#/components/schemas/Chore'
+              example:
+                - id: 1
+                  name: Wash car
+                  completed: true
+                  repeat: weekly
+                - id: 2
+                  name: Vacuum room
+                  completed: false
+                  repeat: daily
         default:
           description: unexpected error
           content:
@@ -38,8 +59,19 @@ paths:
         Create a new chore
       summary: Create a chore
       operationId: createChores
+      requestBody:
+        description: Chore to add
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Chore'
       tags:
         - chores
+      security:
+        - chore_auth:
+            - 'read:chore'
+            - 'write:chore'
       responses:
         '201':
           description: Null response
@@ -64,6 +96,50 @@ paths:
           description: The id of the chore to retrive
           schema:
             type: string
+      security:
+        - chore_auth:
+            - 'read:chore'
+      responses:
+        '200':
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Chore'
+                example:
+                  id: 1
+                  name: Wash Car
+                  completed: true
+                  repeat: weekly
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    delete:
+      description: |
+        Delete one chore from the database
+      summary: Delete chore
+      operationId: deleteChoreById
+      tags:
+        - chores
+      parameters:
+        - name: choreId
+          in: path
+          required: true
+          description: The id of the chore to delete
+          schema:
+            type: string
+        - name: key
+          in: header
+          required: true
+          description: The key header
+          schema:
+            type: string
+      security:
+        - chore_auth:
+            - 'write:chore'
       responses:
         '200':
           description: Expected response to a valid request
@@ -86,6 +162,16 @@ paths:
         '200':
           description: Service available
 components:
+  securitySchemes:
+    chore_auth:
+      type: oauth2
+      description: This API uses OAuth 2 with the client credential grant flow.
+      flows:
+        clientCredentials:
+          tokenUrl: 'https://localhost:6882/token'
+          scope:
+            'write:pets': modify pets in your account
+            'read:pets': read your pets
   schemas:
     Chore:
       required:
