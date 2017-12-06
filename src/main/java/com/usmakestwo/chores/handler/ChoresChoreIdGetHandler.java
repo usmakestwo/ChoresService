@@ -14,7 +14,7 @@ import com.networknt.service.SingletonServiceFactory;
 import com.usmakestwo.chores.model.Chore;
 import io.undertow.server.HttpHandler;
 import io.undertow.server.HttpServerExchange;
-import io.undertow.util.HttpString;
+import io.undertow.util.Headers;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -78,10 +78,10 @@ public class ChoresChoreIdGetHandler implements HttpHandler {
                         // chore data successfully retrieved
 
                         chore = new Chore();
-                        chore.setId(Helper.isNull(resultSet.getString("ID")));
+                        chore.setId(resultSet.getInt("ID"));
                         chore.setName(Helper.isNull(resultSet.getString("NAME")));
                         chore.setRepeat(Helper.isNull(resultSet.getString("REPEAT")));
-                        chore.setCompleted(Helper.isNull(resultSet.getString("COMPLETED")));
+                        chore.setCompleted(resultSet.getBoolean("COMPLETED"));
 
                         // serialize the response
                         Map<String, Chore> map = new HashMap<String, Chore>();
@@ -113,8 +113,10 @@ public class ChoresChoreIdGetHandler implements HttpHandler {
         // set the content type in response
         exchange.getResponseHeaders().put(Headers.CONTENT_TYPE, "application/json");
 
+
         // serialize the response object and set in the response
         exchange.setStatusCode(statusCode);
         exchange.getResponseSender().send(resp);
     }
 }
+
