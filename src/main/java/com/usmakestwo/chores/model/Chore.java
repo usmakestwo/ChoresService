@@ -12,7 +12,7 @@ public class Chore {
     
     private Boolean completed;
     
-    private String repeat;
+    private String recurrent;
     
 
     public Chore () {
@@ -53,13 +53,13 @@ public class Chore {
     
     
     
-    @JsonProperty("repeat")
-    public String getRepeat() {
-        return repeat;
+    @JsonProperty("recurrent")
+    public String getRecurrent() {
+        return recurrent;
     }
 
-    public void setRepeat(String repeat) {
-        this.repeat = repeat;
+    public void setRecurrent(String recurrent) {
+        this.recurrent = recurrent;
     }
     
     
@@ -78,12 +78,12 @@ public class Chore {
         Objects.equals(id, Chore.id) &&
         Objects.equals(completed, Chore.completed) &&
         
-        Objects.equals(repeat, Chore.repeat);
+        Objects.equals(recurrent, Chore.recurrent);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, id, completed,  repeat);
+        return Objects.hash(name, id, completed,  recurrent);
     }
 
     @Override
@@ -94,7 +94,7 @@ public class Chore {
         sb.append("    name: ").append(toIndentedString(name)).append("\n");
         sb.append("    id: ").append(toIndentedString(id)).append("\n");
         sb.append("    completed: ").append(toIndentedString(completed)).append("\n");
-        sb.append("    repeat: ").append(toIndentedString(repeat)).append("\n");
+        sb.append("    recurrent: ").append(toIndentedString(recurrent)).append("\n");
         sb.append("}");
         return sb.toString();
     }

@@ -12,7 +12,7 @@ public class ChoresGetHandler implements HttpHandler {
     public void handleRequest(HttpServerExchange exchange) throws Exception {
         
             exchange.getResponseHeaders().add(new HttpString("Content-Type"), "application/json");
-             exchange.getResponseSender().send("[{\"id\":1,\"name\":\"Wash car\",\"completed\":true,\"repeat\":\"weekly\"},{\"id\":2,\"name\":\"Vacuum room\",\"completed\":false,\"repeat\":\"daily\"}]");
+             exchange.getResponseSender().send("[{\"id\":1,\"name\":\"Wash car\",\"completed\":true,\"recurrent\":\"weekly\"},{\"id\":2,\"name\":\"Vacuum room\",\"completed\":false,\"recurrent\":\"daily\"}]");
         
     }
 }

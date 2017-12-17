@@ -3,7 +3,7 @@
               "read:pets": "read your pets"
             }}}}},"schemas":{"Chore":{"required":["id",
           "name",
-          "completed"],"properties":{"name":{"type": "string"},"id":{"type": "integer","format": "int64"},"completed":{"type": "boolean"},"repeat":{"type": "string"}}},"Error":{"required":["code",
+          "completed"],"properties":{"name":{"type": "string"},"id":{"type": "integer","format": "int64"},"completed":{"type": "boolean"},"recurrent":{"type": "string"}}},"Error":{"required":["code",
           "message"],"properties":{"message":{"type": "string"},"code":{"type": "integer","format": "int32"}}}}},"servers": [
     {
       "url": "http://usmakestwo.com/chore/v1"
@@ -45,7 +45,7 @@
                     "id": 1,
                     "name": "Wash Car",
                     "completed": true,
-                    "repeat": "weekly"
+                    "recurrent": "weekly"
                   }
                 }
               }
@@ -161,13 +161,13 @@
                     "id": 1,
                     "name": "Wash car",
                     "completed": true,
-                    "repeat": "weekly"
+                    "recurrent": "weekly"
                   },
                   {
                     "id": 2,
                     "name": "Vacuum room",
                     "completed": false,
-                    "repeat": "daily"
+                    "recurrent": "daily"
                   }
                 ]
               }

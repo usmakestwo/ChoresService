@@ -49,6 +49,7 @@ public class ChoresChoreIdGetHandler implements HttpHandler {
      */
     @Override
     public void handleRequest(HttpServerExchange exchange) throws Exception {
+
         if (exchange.isInIoThread()) {
             exchange.dispatch(this);
             return;
@@ -80,7 +81,7 @@ public class ChoresChoreIdGetHandler implements HttpHandler {
                         chore = new Chore();
                         chore.setId(resultSet.getInt("ID"));
                         chore.setName(Helper.isNull(resultSet.getString("NAME")));
-                        chore.setRepeat(Helper.isNull(resultSet.getString("REPEAT")));
+                        chore.setRecurrent(Helper.isNull(resultSet.getString("RECURRENT")));
                         chore.setCompleted(resultSet.getBoolean("COMPLETED"));
 
                         // serialize the response
