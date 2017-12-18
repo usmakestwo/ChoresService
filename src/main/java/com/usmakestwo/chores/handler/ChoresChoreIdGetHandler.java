@@ -19,6 +19,7 @@ import io.undertow.util.Headers;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -85,8 +86,8 @@ public class ChoresChoreIdGetHandler implements HttpHandler {
                         chore.setCompleted(resultSet.getBoolean("COMPLETED"));
 
                         // serialize the response
-                        Map<String, Chore> map = new HashMap<String, Chore>();
-                        map.put("chores", chore);
+                        ArrayList<Chore> map = new ArrayList<Chore>();
+                        map.add(chore);
 
                         resp = mapper.writeValueAsString(map);
                     } else {
