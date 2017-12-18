@@ -60,8 +60,9 @@ public class ChoresGetHandler implements HttpHandler {
 
                 try(ResultSet resultSet = statement.executeQuery()) {
 
+                    // Array to store chores in
                     ArrayList<Chore> map = new ArrayList<Chore>();
-                    // extract chore data
+                    // extract chore data while it exists
                     while (resultSet.next()) {
                         // chore data successfully retrieved
 
