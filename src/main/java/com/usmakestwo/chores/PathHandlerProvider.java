@@ -16,17 +16,17 @@ public class PathHandlerProvider implements HandlerProvider {
     public HttpHandler getHandler() {
         return Handlers.routing()
         
-            .add(Methods.GET, "/chore/v1/health", new HealthGetHandler())
+            .add(Methods.GET, "/bankly/v1/health", new HealthGetHandler())
         
-            .add(Methods.POST, "/chore/v1/chores", new ChoresPostHandler())
+            .add(Methods.POST, "/bankly/v1/chores", new ChoresPostHandler())
         
-            .add(Methods.GET, "/chore/v1/chores", new ChoresGetHandler())
+            .add(Methods.GET, "/bankly/v1/chores", new ChoresGetHandler())
         
-            .add(Methods.GET, "/chore/v1/server/info", new ServerInfoGetHandler())
+            .add(Methods.GET, "/bankly/v1/server/info", new ServerInfoGetHandler())
         
-            .add(Methods.GET, "/chore/v1/chores/{choreId}", new ChoresChoreIdGetHandler())
+            .add(Methods.GET, "/bankly/v1/chores/{choreId}", new ChoresChoreIdGetHandler())
         
-            .add(Methods.DELETE, "/chore/v1/chores/{choreId}", new ChoresChoreIdDeleteHandler())
+            .add(Methods.DELETE, "/bankly/v1/chores/{choreId}", new ChoresChoreIdDeleteHandler())
         
         ;
     }

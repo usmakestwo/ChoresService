@@ -77,8 +77,8 @@ public class ChoresChoreIdGetHandler implements HttpHandler {
                     // extract chore data
                     if (resultSet.next()) {
                         // chore data successfully retrieved
-
                         chore = new Chore();
+                        chore.setCustomerID(resultSet.getInt("CUSTOMER_ID"));
                         chore.setId(resultSet.getInt("ID"));
                         chore.setName(Helper.isNull(resultSet.getString("NAME")));
                         chore.setRecurrent(Helper.isNull(resultSet.getString("RECURRENT")));

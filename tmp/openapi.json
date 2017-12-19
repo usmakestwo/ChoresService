@@ -264,15 +264,15 @@
   },
   "components": {
     "securitySchemes": {
-      "OAuth2": {
+      "chore_auth": {
         "type": "oauth2",
+        "description": "This API uses OAuth 2 with the client credential grant flow.",
         "flows": {
-          "authorizationCode": {
-            "authorizationUrl": "http://localhost:8080/oauth2/code",
-            "tokenUrl": "http://localhost:8080/oauth2/token",
-            "scopes": {
-              "read:chore": "Grants read access",
-              "write:chore": "Grants write access"
+          "clientCredentials": {
+            "tokenUrl": "https://localhost:6882/token",
+            "scope": {
+              "write:chores": "modify chores in your account",
+              "read:chores": "read your chores"
             }
           }
         }

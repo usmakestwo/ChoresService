@@ -5,7 +5,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Chore {
 
-    
+
+    private Integer customerID;
+
     private String name;
     
     private Integer id;
@@ -18,7 +20,15 @@ public class Chore {
     public Chore () {
     }
 
-    
+
+    @JsonProperty("customerID")
+    public Integer getCustomerID() {
+        return customerID;
+    }
+
+    public void setCustomerID(Integer customerID) {
+        this.customerID = customerID;
+    }
     
     @JsonProperty("name")
     public String getName() {
@@ -74,23 +84,24 @@ public class Chore {
         }
         Chore Chore = (Chore) o;
 
-        return Objects.equals(name, Chore.name) &&
-        Objects.equals(id, Chore.id) &&
-        Objects.equals(completed, Chore.completed) &&
-        
-        Objects.equals(recurrent, Chore.recurrent);
+        return Objects.equals(customerID, Chore.customerID) &&
+         Objects.equals(name, Chore.name) &&
+         Objects.equals(id, Chore.id) &&
+         Objects.equals(completed, Chore.completed) &&
+         Objects.equals(recurrent, Chore.recurrent);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, id, completed,  recurrent);
+        return Objects.hash(customerID, name, id, completed,  recurrent);
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("class Chore {\n");
-        
+
+        sb.append("    customerID: ").append(toIndentedString(customerID)).append("\n");
         sb.append("    name: ").append(toIndentedString(name)).append("\n");
         sb.append("    id: ").append(toIndentedString(id)).append("\n");
         sb.append("    completed: ").append(toIndentedString(completed)).append("\n");
