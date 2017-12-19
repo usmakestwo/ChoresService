@@ -49,14 +49,18 @@ public class ChoresGetHandler implements HttpHandler {
         Status status = null;
         int statusCode = 200;
         String resp = null;
+        // Get CustomerId
+        Integer customerId = Integer.valueOf(exchange.getQueryParameters().get("cust_id").getLast());
         Chore chore = null;
 
         // Get data from SQL
         try (final Connection connection = ds.getConnection()) {
 
             try (PreparedStatement statement = connection.prepareStatement(
-                    "SELECT * FROM chore",
+                    "SELECT * FROM chore WHERE CUSTOMER_ID = ?",
                     ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY)) {
+
+                statement.setInt(1, customerId);
 
                 try(ResultSet resultSet = statement.executeQuery()) {
 
@@ -67,6 +71,7 @@ public class ChoresGetHandler implements HttpHandler {
                         // chore data successfully retrieved
 
                         chore = new Chore();
+                        chore.setCustomerID(resultSet.getInt("CUSTOMER_ID"));
                         chore.setId(resultSet.getInt("ID"));
                         chore.setName(Helper.isNull(resultSet.getString("NAME")));
                         chore.setRecurrent(Helper.isNull(resultSet.getString("RECURRENT")));
