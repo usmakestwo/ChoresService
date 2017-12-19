@@ -58,7 +58,7 @@ public class Chore {
         return recurrent;
     }
 
-    public void setRecurrent(String recurrent) {
+    public void setRecurrent    (String recurrent) {
         this.recurrent = recurrent;
     }
     

@@ -15,40 +15,40 @@
   },
   "servers": [
     {
-      "url": "http://usmakestwo.com/chore/v1"
+      "url": "http://usmakestwo.com/bankly/v1"
     }
   ],
   "paths": {
     "/chores": {
       "get": {
-        "description": "Retrieve all chores\n",
-        "summary": "List all chores",
-        "operationId": "listChores",
+        "description": "Return chores matching a customer ID\n",
+        "summary": "Chore by Customer ID",
+        "operationId": "findChoreByCustomerId",
         "tags": [
           "chores"
         ],
         "parameters": [
           {
-            "name": "limit",
+            "name": "cust_id",
             "in": "query",
-            "description": "How many items to return at one time (max 100)",
+            "description": "Customer Id for which to retrieve the account list",
             "required": false,
             "schema": {
-              "type": "integer"
+              "type": "integer",
+              "format": "int32"
             }
           }
         ],
-        "format": "int32",
         "security": [
           {
-            "chore_auth": [
-              "read:chores"
+            "OAuth2": [
+              "chore"
             ]
           }
         ],
         "responses": {
           "200": {
-            "description": "An array of chores",
+            "description": "Chores matching Customer ID",
             "content": {
               "application/json": {
                 "schema": {
@@ -58,15 +58,24 @@
                 "example": [
                   {
                     "id": 1,
+                    "customerID": 1,
                     "name": "Wash car",
                     "completed": true,
-                    "repeat": "weekly"
+                    "recurrent": "weekly"
                   },
                   {
                     "id": 2,
+                    "customerID": 1,
                     "name": "Vacuum room",
                     "completed": false,
-                    "repeat": "daily"
+                    "recurrent": "daily"
+                  },
+                  {
+                    "id": 3,
+                    "customerID": 1,
+                    "name": "Clean room",
+                    "completed": false,
+                    "recurrent": "monthly"
                   }
                 ]
               }
@@ -148,8 +157,8 @@
         ],
         "security": [
           {
-            "chore_auth": [
-              "read:chore"
+            "OAuth2": [
+              "chore"
             ]
           }
         ],
@@ -162,9 +171,10 @@
                   "$ref": "#/components/schemas/Chore",
                   "example": {
                     "id": 1,
+                    "customerID": 1,
                     "name": "Wash Car",
                     "completed": true,
-                    "repeat": "weekly"
+                    "recurrent": "weekly"
                   }
                 }
               }
@@ -211,8 +221,8 @@
         ],
         "security": [
           {
-            "chore_auth": [
-              "write:chore"
+            "OAuth2": [
+              "chore"
             ]
           }
         ],
@@ -254,15 +264,15 @@
   },
   "components": {
     "securitySchemes": {
-      "chore_auth": {
+      "OAuth2": {
         "type": "oauth2",
-        "description": "This API uses OAuth 2 with the client credential grant flow.",
         "flows": {
-          "clientCredentials": {
-            "tokenUrl": "https://localhost:6882/token",
-            "scope": {
-              "write:pets": "modify pets in your account",
-              "read:pets": "read your pets"
+          "authorizationCode": {
+            "authorizationUrl": "http://localhost:8080/oauth2/code",
+            "tokenUrl": "http://localhost:8080/oauth2/token",
+            "scopes": {
+              "read:chore": "Grants read access",
+              "write:chore": "Grants write access"
             }
           }
         }
@@ -272,21 +282,31 @@
       "Chore": {
         "required": [
           "id",
+          "customerID",
           "name",
           "completed"
         ],
         "properties": {
           "id": {
+            "description": "Unique identifier for chore",
+            "type": "integer",
+            "format": "int64"
+          },
+          "customerID": {
+            "description": "The customer ID related to each chore",
             "type": "integer",
             "format": "int64"
           },
           "name": {
+            "description": "The name of the chore",
             "type": "string"
           },
           "completed": {
+            "description": "If the chore is completed",
             "type": "boolean"
           },
-          "repeat": {
+          "recurrent": {
+            "description": "How often does the chore happen",
             "type": "string"
           }
         }

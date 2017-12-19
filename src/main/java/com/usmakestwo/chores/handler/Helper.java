@@ -43,7 +43,7 @@ public class Helper {
     }
 
     static String getChoreRepeat(HttpServerExchange exchange) {
-        Deque<String> values = exchange.getQueryParameters().get("repeat");
+        Deque<String> values = exchange.getQueryParameters().get("recurrent");
 
         if (values == null) {
             return null;
