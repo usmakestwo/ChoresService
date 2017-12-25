@@ -15,7 +15,8 @@ public class Chore {
     private Boolean completed;
     
     private String recurrent;
-    
+
+    private Integer amount;
 
     public Chore () {
     }
@@ -68,10 +69,14 @@ public class Chore {
         return recurrent;
     }
 
-    public void setRecurrent    (String recurrent) {
+    public void setRecurrent(String recurrent) {
         this.recurrent = recurrent;
     }
-    
+
+    @JsonProperty("amount")
+    public Integer getAmount() { return amount; }
+
+    public void setAmount(Integer amount) { this.amount = amount; }
     
 
     @Override
@@ -88,12 +93,13 @@ public class Chore {
          Objects.equals(name, Chore.name) &&
          Objects.equals(id, Chore.id) &&
          Objects.equals(completed, Chore.completed) &&
-         Objects.equals(recurrent, Chore.recurrent);
+         Objects.equals(recurrent, Chore.recurrent) &&
+         Objects.equals(amount, Chore.amount);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(customerID, name, id, completed,  recurrent);
+        return Objects.hash(customerID, name, id, completed, recurrent, amount);
     }
 
     @Override
@@ -106,6 +112,7 @@ public class Chore {
         sb.append("    id: ").append(toIndentedString(id)).append("\n");
         sb.append("    completed: ").append(toIndentedString(completed)).append("\n");
         sb.append("    recurrent: ").append(toIndentedString(recurrent)).append("\n");
+        sb.append("    recurrent: ").append(toIndentedString(amount)).append("\n");
         sb.append("}");
         return sb.toString();
     }

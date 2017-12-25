@@ -83,6 +83,7 @@ public class ChoresChoreIdGetHandler implements HttpHandler {
                         chore.setName(Helper.isNull(resultSet.getString("NAME")));
                         chore.setRecurrent(Helper.isNull(resultSet.getString("RECURRENT")));
                         chore.setCompleted(resultSet.getBoolean("COMPLETED"));
+                        chore.setAmount(resultSet.getInt("AMOUNT"));
 
                         // serialize the response
                         ArrayList<Chore> map = new ArrayList<Chore>();
