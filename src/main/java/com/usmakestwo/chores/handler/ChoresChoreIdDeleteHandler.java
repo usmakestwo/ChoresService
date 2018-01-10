@@ -57,7 +57,7 @@ public class ChoresChoreIdDeleteHandler implements HttpHandler {
         String resp = null;
 
         // get chore id here.
-        Integer choreId = Integer.valueOf(exchange.getQueryParameters().get("id").getFirst());
+        Integer choreId = Integer.valueOf(exchange.getQueryParameters().get("choreId").getFirst());
         Chore chore = null;
 
         // Get data from SQL
@@ -68,21 +68,20 @@ public class ChoresChoreIdDeleteHandler implements HttpHandler {
                     ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY)) {
 
                 statement.setInt(1, choreId);
+                int result = statement.executeUpdate();
 
-                try(ResultSet resultSet = statement.executeQuery()) {
+                if (result == 1) {
+                    System.out.println(result);
+                    resp = "Successfully deleted chore: " + choreId;
+                }
+                else {
+                    // chore data not found
+                    //TODO: change error code
+                    status = new Status("ERR12013", choreId);
+                    statusCode = status.getStatusCode();
 
-                    // extract chore data
-                    if (resultSet.next()) {
-                        System.out.println(resultSet);
-                        resp = mapper.writeValueAsString(resultSet);
-                    } else {
-                        // chore data not found
-                        status = new Status("ERR12013", choreId);
-                        statusCode = status.getStatusCode();
-
-                        // serialize the error response
-                        resp = mapper.writeValueAsString(status);
-                    }
+                    // serialize the error response
+                    resp = mapper.writeValueAsString(status);
                 }
             }
         } catch (Exception e) {

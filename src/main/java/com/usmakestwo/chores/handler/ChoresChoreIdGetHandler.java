@@ -60,7 +60,8 @@ public class ChoresChoreIdGetHandler implements HttpHandler {
         String resp = null;
 
         // get chore id here.
-        Integer choreId = Integer.valueOf(exchange.getQueryParameters().get("id").getFirst());
+        Integer choreId = Integer.valueOf(exchange.getQueryParameters().get("choreId").getFirst());
+
         Chore chore = null;
 
         // Get data from SQL
