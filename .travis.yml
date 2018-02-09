@@ -14,7 +14,7 @@ after_success:
   - if [[ "$TRAVIS_BRANCH" == "master" && "$TRAVIS_PULL_REQUEST" == "false" ]]; then 
       echo "Publishing from $TRAVIS_BRANCH branch"; 
       docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" https://index.docker.io/v1/ || exit 1; 
-      ./docker-publish.sh $(mvn org.apache.maven.plugins:maven-help-plugin:2.1.1:evaluate -Dexpression=project.version|grep -Ev '(^\[|Download\w+:)') || exit 1; 
+      ./docker-publish.sh $(mvn org.apache.maven.plugins:maven-help-plugin:2.1.1:evaluate -Dexpression=project.version | egrep -v '^\[|Downloading:' | sed 's/[^0-9\.]//g' | awk 1 ORS='') || exit 1; 
       echo "Built on $TRAVIS_BRANCH branch. All done.."; 
     else 
       echo "Built on $TRAVIS_BRANCH branch. All done.."; 
