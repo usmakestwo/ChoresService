@@ -1,5 +1,7 @@
 # Swagger Light Java Server
 
+[![Build Status](https://travis-ci.org/usmakestwo/ChoresService.svg?branch=master)](https://travis-ci.org/usmakestwo/ChoresService)
+
 ## Start server
 
 Run with
