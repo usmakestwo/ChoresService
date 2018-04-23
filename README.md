@@ -8,7 +8,7 @@ Run with
 
 ```
 mvn package exec:exec
-``
+```
 
 ## Endpoints Available
 
