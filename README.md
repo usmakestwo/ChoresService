@@ -1,4 +1,4 @@
-# Swagger Light Java Server
+# Chore Service
 
 [![Build Status](https://travis-ci.org/usmakestwo/ChoresService.svg?branch=master)](https://travis-ci.org/usmakestwo/ChoresService)
 
@@ -10,20 +10,53 @@ Run with
 mvn package exec:exec
 ``
 
-## Test
+## Endpoints Available
 
-By default, all endpoints are protected by OAuth jwt token verifier. It can be turned off with config change through for development.
-
-
-In order to access the server, there is a long lived token below issued by my
-oauth2 server [light-oauth2](https://github.com/networknt/light-oauth2)
+### Get Chore by ID
 
 ```
-Bearer eyJraWQiOiIxMDAiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJ1cm46Y29tOm5ldHdvcmtudDpvYXV0aDI6djEiLCJhdWQiOiJ1cm46Y29tLm5ldHdvcmtudCIsImV4cCI6MTc5MDAzNTcwOSwianRpIjoiSTJnSmdBSHN6NzJEV2JWdUFMdUU2QSIsImlhdCI6MTQ3NDY3NTcwOSwibmJmIjoxNDc0Njc1NTg5LCJ2ZXJzaW9uIjoiMS4wIiwidXNlcl9pZCI6InN0ZXZlIiwidXNlcl90eXBlIjoiRU1QTE9ZRUUiLCJjbGllbnRfaWQiOiJmN2Q0MjM0OC1jNjQ3LTRlZmItYTUyZC00YzU3ODc0MjFlNzIiLCJzY29wZSI6WyJ3cml0ZTpwZXRzIiwicmVhZDpwZXRzIl19.mue6eh70kGS3Nt2BCYz7ViqwO7lh_4JSFwcHYdJMY6VfgKTHhsIGKq2uEDt3zwT56JFAePwAxENMGUTGvgceVneQzyfQsJeVGbqw55E9IfM_uSM-YcHwTfR7eSLExN4pbqzVDI353sSOvXxA98ZtJlUZKgXNE1Ngun3XFORCRIB_eH8B0FY_nT_D1Dq2WJrR-re-fbR6_va95vwoUdCofLRa4IpDfXXx19ZlAtfiVO44nw6CS8O87eGfAm7rCMZIzkWlCOFWjNHnCeRsh7CVdEH34LF-B48beiG5lM7h4N12-EME8_VDefgMjZ8eqs1ICvJMxdIut58oYbdnkwTjkA
+GET http://localhost:8080/bankly/v1/chores/?id=1
 ```
 
-Postman is the best tool to test REST APIs
+```
+[
+    {
+        "customerID": 1,
+        "name": "Wash car",
+        "id": 1,
+        "completed": true,
+        "recurrent": "Weekly"
+    }
+]
+```
 
-Add "Authorization" header with value as above token and a dummy message will return from the generated stub.
+### Delete Chore by ID
 
+```
+DELETE http://localhost:8080/bankly/v1/chores/?id=1
+```
 
+### Get Chore by Customer ID
+
+```
+GET http://localhost:8080/bankly/v1/chores?cust_id=2
+```
+
+```
+[
+    {
+        "customerID": 2,
+        "name": "Do Laundary",
+        "id": 3,
+        "completed": false,
+        "recurrent": "Monthly"
+    },
+    {
+        "customerID": 2,
+        "name": "Walk the dog",
+        "id": 4,
+        "completed": true,
+        "recurrent": "Daily"
+    }
+]
+```
